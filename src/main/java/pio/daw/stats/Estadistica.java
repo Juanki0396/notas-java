@@ -2,7 +2,7 @@ package pio.daw.stats;
 
 import java.util.List;
 
-public class Estidista {
+public class Estadistica {
 
     //TODO
     public static Double media(List<Double> nums){
