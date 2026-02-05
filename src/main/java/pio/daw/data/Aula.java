@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import pio.daw.stats.Estadistica;
@@ -34,6 +35,7 @@ public class Aula extends AulaABC implements EstadisticaBasica, Graficable {
             System.err.printf("ERROR: Cannot read file: %f\n", path);
             System.exit(1);
         }
+        Collections.sort(alumnos, (a1, a2) -> a1.getNombre().compareTo(a2.getNombre()));
         return new Aula(alumnos);
     }
 
@@ -134,6 +136,7 @@ public class Aula extends AulaABC implements EstadisticaBasica, Graficable {
      * media, máximo, mínimo y varianza
      */
     public void printAulaStats(){
+        System.out.printf("%1$s%2$sEstadísticas%2$s%1$s\n\n", "* * * * *", "   ");
         AlumnoABC bestAlumno = this.getBestAlumno();
         AlumnoABC wostAlumno = this.getWorstAlumno();
         System.out.printf("%-18s -> %s: %.2f\n", "Mejor Alumno", bestAlumno.getNombre(), Estadistica.media(bestAlumno.getNotas()));
@@ -141,11 +144,18 @@ public class Aula extends AulaABC implements EstadisticaBasica, Graficable {
         System.out.printf("%-18s -> %.2f\n", "Media de la clase", this.getMedia());
         System.out.printf("%-18s -> %.2f\n", "Máximo de la clase", this.getMedia());
         System.out.printf("%-18s -> %.2f\n", "Media de la clase", this.getMedia());
-        System.out.printf("%-18s -> %.2f\n", "Media de la clase", this.getMedia());
+        System.out.printf("%-18s -> %.2f\n\n", "Media de la clase", this.getMedia());
     }
 
+    /**
+     * Imprime en consola una gráfica de barras con las notas medias de cada uno de los alumnos.
+     */
     public void printBarPlot(){
-        //TODO
+        System.out.printf("%1$s%2$sNOTAS%2$s%1$s\n\n", "* * * * *", "   ");
+        for (AlumnoABC a : this.getAlumnos()){
+            Integer mediaRedondeada = (int) Math.round(Estadistica.media(a.getNotas()));
+            System.out.printf("%-20s |%s\n", a.getNombre(), String.join(" ", Collections.nCopies(mediaRedondeada, "*")));
+        }
     }
 
 }
