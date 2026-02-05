@@ -11,7 +11,7 @@ public class App {
             System.err.println(e.getMessage());
             System.exit(1);
         }
-        Aula clase = Aula.fromFile(argParser.getPath().toFile());
+        Aula clase = Aula.fromFile(argParser.getPath());
         clase.printAulaStats();
         clase.printBarPlot();
     }
